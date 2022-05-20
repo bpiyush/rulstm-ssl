@@ -112,6 +112,7 @@ class SequenceDataset(data.Dataset):
 
             # sample frames before the beginning of the action
             frames = self.__sample_frames_past(a.start)
+            import ipdb; ipdb.set_trace()
 
             if self.action_samples:
                 # sample frames from the action
@@ -208,3 +209,22 @@ class SequenceDataset(data.Dataset):
 
         return out
 
+
+if __name__ == "__main__":
+    from os.path import join
+    
+    kargs = {
+        'path_to_lmdb': "./data/ek100/rgb/",
+        'path_to_csv': join("./data/ek100/", f"validation.csv"),
+        'time_step': 0.25,
+        'img_tmpl': 'frame_{:010d}.jpg',
+        'action_samples': None,
+        'past_features': True,
+        'sequence_length': 6 + 8,
+        'label_type': ['verb', 'noun', 'action'],
+        'challenge': False,
+    }
+    dataset = SequenceDataset(**kargs)
+    
+    instance = dataset[0]
+    import ipdb; ipdb.set_trace()
